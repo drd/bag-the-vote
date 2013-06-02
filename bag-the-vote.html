@@ -1,0 +1,45 @@
+<head>
+  <title>bag-the-vote</title>
+  <link href='http://fonts.googleapis.com/css?family=Lato:400,700,900,100italic' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+  <div id="wrap">
+    <div id="main">
+      {{> hello}}
+    </div>
+    <div id="meta">
+      {{> meta }}
+    </div>
+  </div>
+</body>
+
+<template name="users">
+  <ul>
+  {{#each users }}
+    <li class="user">
+      <h3>{{ this.profile.name }}</h3>
+      <img class="thumb" src="{{ this.services.google.picture }}">
+    </li>
+  {{/each }}
+  </ul>
+</template>
+
+<template name="meta">
+  {{#if currentUser }}
+    <div id="current-user" class="user">
+      <h3>Hello, {{ currentUser.profilename }}</h3>
+      <img class="thumb" src="{{ currentUser.services.google.picture }}">
+    </div>
+    {{loginButtons}}
+    <hr>
+    {{> users }}
+  {{else}}
+    Please sign in:
+    {{loginButtons}}
+  {{/if}}
+</template>
+
+<template name="hello">
+  <h1>Bag the Vote (yo)!</h1>
+</template>

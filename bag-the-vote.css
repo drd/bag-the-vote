@@ -1,0 +1,56 @@
+/* CSS declarations go here */
+
+/* global/text */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: Lato;
+    background: url(/img/ticks_@2X.png);
+}
+
+hr {
+    height: 1px;
+    margin: 1em 0;
+    border: 0;
+    border-bottom: thin solid #ccc;
+}
+
+/* overall structure */
+
+#wrap {
+    width: 80em;
+    margin: 0 auto;
+    padding: 2em 1em;
+    background: white;
+    box-shadow: 0 0 2em rgba(0, 0, 0, 0.25);
+}
+
+#wrap > div {
+    display: inline-block;
+}
+
+#main {
+    width: 59em;
+    float: left;
+}
+
+#meta {
+    width: 19em;
+}
+
+/* modules */
+
+.user h3 {
+    font-weight: 100;
+    font-style: italic;
+}
+
+li.user {
+    list-style: none;
+}
+
+img.thumb {
+    max-width: 80px;
+    max-height: 80px;
+}
