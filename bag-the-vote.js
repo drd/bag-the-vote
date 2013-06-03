@@ -1,4 +1,3 @@
-var Talks = new Meteor.Collection("talks");
 var Votes = new Meteor.Collection("votes");
 
 if (Meteor.isClient) {
@@ -6,21 +5,41 @@ if (Meteor.isClient) {
         return Meteor.users.find();
     };
 
-    Template.hello.greeting = function () {
-        return "Welcome to bag-the-vote.";
+    Template.talks.votable = function() {
+        var talk = Talks.findOne(this._id);
+        console.log(talk.votes.voters);
+        if (!_.find(talk.votes.voters, function(voter) {
+            return voter.displayName == Meteor.user().profile.name;
+        })) {
+            return true;
+        }
     };
 
-    Template.hello.events({
-        'click input' : function () {
-            // template data, if any, is available in 'this'
-            if (typeof console !== 'undefined')
-                console.log("You pressed the button", Meteor.user());
+    Template.talks.talks = function() {
+        return Talks.find({}, {
+            sort: {
+                'votes.votes': '-1',
+                'name': '1'
+            }
+        }).fetch();
+    };
+
+    Template.talks.events({
+        'click button': function(event) {
+            console.log(this._id);
+            var talk = Talks.findOne(this._id);
+            console.log(talk);
+            talk.votes.voters.push({user: Meteor.user});
+            talk.votes.votes = talk.votes.voters.length;
+            Talks.update(talk._id, talk);
         }
     });
 }
 
 if (Meteor.isServer) {
     Meteor.startup(function () {
+        Talks.sync();
+        Talks.syncVotes();
         // code to run on server at startup
     });
 }

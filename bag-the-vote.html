@@ -6,7 +6,8 @@
 <body>
   <div id="wrap">
     <div id="main">
-      {{> hello}}
+      <h1>Bag the Vote!</h1>
+      {{> talks }}
     </div>
     <div id="meta">
       {{> meta }}
@@ -14,13 +15,35 @@
   </div>
 </body>
 
+<template name="talks">
+  <ul>
+  {{#each talks}}
+    <li class="talk">
+      <h2>{{ this.name }}</h2>
+      <p>Suggested by: {{ this.user.name }}</p>
+      <p>Votes: {{ this.votes.votes }}</p>
+      {{#if votable}}
+        <button>Vote!</button>
+      {{/if}}
+      {{#with this.user }}
+        {{> user }}
+      {{/with }}
+    </li>
+  {{/each}}
+  </ul>
+</template>
+
+<template name="user">
+  <li class="user">
+    <h3>{{ this.profile.name }}</h3>
+    <img class="thumb" src="{{ this.services.google.picture }}">
+  </li>
+</template>
+
 <template name="users">
   <ul>
   {{#each users }}
-    <li class="user">
-      <h3>{{ this.profile.name }}</h3>
-      <img class="thumb" src="{{ this.services.google.picture }}">
-    </li>
+    {{> user }}
   {{/each }}
   </ul>
 </template>
@@ -28,7 +51,7 @@
 <template name="meta">
   {{#if currentUser }}
     <div id="current-user" class="user">
-      <h3>Hello, {{ currentUser.profilename }}</h3>
+      <h3>Hello, {{ currentUser.profile.name }}</h3>
       <img class="thumb" src="{{ currentUser.services.google.picture }}">
     </div>
     {{loginButtons}}
@@ -41,5 +64,4 @@
 </template>
 
 <template name="hello">
-  <h1>Bag the Vote (yo)!</h1>
 </template>

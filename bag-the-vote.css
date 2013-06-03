@@ -9,6 +9,11 @@ body {
     background: url(/img/ticks_@2X.png);
 }
 
+h1 {
+    font-weight: 900;
+    margin-bottom: .5em;
+}
+
 hr {
     height: 1px;
     margin: 1em 0;
@@ -16,18 +21,31 @@ hr {
     border-bottom: thin solid #ccc;
 }
 
+button {
+    padding: .5em 1em;
+    border-radius: .25em;
+    background: -webkit-linear-gradient(top, #eee 0, #ddd 33%, #fff 80%);
+    border: thin solid #ccc;
+}
+
+p {
+    margin: .5em 0;
+}
+
 /* overall structure */
 
 #wrap {
     width: 80em;
-    margin: 0 auto;
+    margin: 0 auto 1em;
     padding: 2em 1em;
     background: white;
     box-shadow: 0 0 2em rgba(0, 0, 0, 0.25);
 }
 
-#wrap > div {
-    display: inline-block;
+#wrap:after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 #main {
@@ -37,6 +55,7 @@ hr {
 
 #meta {
     width: 19em;
+    float: left;
 }
 
 /* modules */
@@ -46,8 +65,14 @@ hr {
     font-style: italic;
 }
 
-li.user {
+li.talk, li.user {
     list-style: none;
+}
+
+li.talk {
+    margin: 1em 1em 1em 0;
+    padding: 1em;
+    background-color: #f7f6e7;
 }
 
 img.thumb {
