@@ -7,7 +7,10 @@ if (Meteor.isClient) {
 
     Template.meta.events({
         'click #current-user img': function(event) {
-            var jiraEmail = prompt("What is your JIRA email?");
+            var jiraEmail = prompt(
+                "What is your JIRA email?",
+                Meteor.user().jiraEmail
+            );
             if (jiraEmail) {
                 Meteor.users.update(
                     Meteor.user()._id,
@@ -18,12 +21,12 @@ if (Meteor.isClient) {
     });
 
     Template.talks.votable = function() {
-        var talk = Talks.findOne(this._id);
-        console.log(talk.votes.voters);
-        if (!_.find(talk.votes.voters, function(voter) {
+        var talk = talk || Talks.findOne(this._id),
+            user = Meteor.user();
+        if (_.find(talk.votes.voters, function(voter) {
             return (
-                voter.email == Meteor.user().services.google.emailAddress
-                || voter.email == Meteor.user().profile.jiraEmail
+                voter.email == user.services.google.email ||
+                voter.email == user.profile.jiraEmail
             );
         })) {
             return true;
@@ -47,12 +50,16 @@ if (Meteor.isClient) {
         'click button': function(event) {
             var talk = Talks.findOne(this._id);
             var user = Meteor.user();
-            talk.votes.voters.push({
-                name: user.profile.name,
-                user: Meteor.user()
+            Talks.update(talk._id, {
+                $inc: { 'votes.count': 1 },
+                $push: {
+                    'votes.voters': {
+                        name: user.profile.name,
+                        email: user.services.google.email,
+                        user: Meteor.user()
+                    }
+                }
             });
-            talk.votes.count = talk.votes.voters.length;
-            Talks.update(talk._id, talk);
         }
     });
 }

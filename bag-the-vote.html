@@ -29,9 +29,7 @@
       <h2>{{ this.name }}</h2>
       <p>Suggested by <strong>{{ this.user.name }}</strong> {{ moment this.createdOn }}</p>
       <p>Votes: {{ this.votes.count }}</p>
-      {{#if votable}}
-        <button>Vote!</button>
-      {{/if}}
+      <button {{#if votable}}disabled{{/if}}>Vote!</button>
       {{#with this.user }}
         {{> user }}
       {{/with }}
