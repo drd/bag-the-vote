@@ -19,7 +19,7 @@
   <ul>
   {{#each talks}}
     <li class="talk">
-      {{#if this.votes.voters.length }}
+      {{#if this.votes.count }}
       <ul class="voters">
         {{#each this.votes.voters }}
         <li>{{ name }}</li>
@@ -27,8 +27,8 @@
       </ul>
       {{/if }}
       <h2>{{ this.name }}</h2>
-      <p>Suggested by: {{ this.user.name }}</p>
-      <p>Votes: {{ this.votes.votes }}</p>
+      <p>Suggested by <strong>{{ this.user.name }}</strong> {{ moment this.createdOn }}</p>
+      <p>Votes: {{ this.votes.count }}</p>
       {{#if votable}}
         <button>Vote!</button>
       {{/if}}

@@ -30,10 +30,14 @@ if (Meteor.isClient) {
         }
     };
 
+    Template.talks.moment = function(time) {
+        return moment(time).fromNow();
+    };
+
     Template.talks.talks = function() {
         return Talks.find({}, {
             sort: {
-                'votes.votes': '-1',
+                'votes.count': '-1',
                 'name': '1'
             }
         }).fetch();
