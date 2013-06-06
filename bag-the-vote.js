@@ -45,11 +45,13 @@ if (Meteor.isClient) {
 
     Template.talks.events({
         'click button': function(event) {
-            console.log(this._id);
             var talk = Talks.findOne(this._id);
-            console.log(talk);
-            talk.votes.voters.push({user: Meteor.user});
-            talk.votes.votes = talk.votes.voters.length;
+            var user = Meteor.user();
+            talk.votes.voters.push({
+                name: user.profile.name,
+                user: Meteor.user()
+            });
+            talk.votes.count = talk.votes.voters.length;
             Talks.update(talk._id, talk);
         }
     });
