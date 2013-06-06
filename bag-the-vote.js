@@ -5,11 +5,26 @@ if (Meteor.isClient) {
         return Meteor.users.find();
     };
 
+    Template.meta.events({
+        'click #current-user img': function(event) {
+            var jiraEmail = prompt("What is your JIRA email?");
+            if (jiraEmail) {
+                Meteor.users.update(
+                    Meteor.user()._id,
+                    {$set: {'profile.jiraEmail': jiraEmail}}
+                );
+            }
+        }
+    });
+
     Template.talks.votable = function() {
         var talk = Talks.findOne(this._id);
         console.log(talk.votes.voters);
         if (!_.find(talk.votes.voters, function(voter) {
-            return voter.displayName == Meteor.user().profile.name;
+            return (
+                voter.email == Meteor.user().services.google.emailAddress
+                || voter.email == Meteor.user().profile.jiraEmail
+            );
         })) {
             return true;
         }
@@ -40,6 +55,5 @@ if (Meteor.isServer) {
     Meteor.startup(function () {
         Talks.sync();
         Talks.syncVotes();
-        // code to run on server at startup
     });
 }
