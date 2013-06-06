@@ -19,6 +19,11 @@
   <ul>
   {{#each talks}}
     <li class="talk">
+      <ul class="voters">
+        {{#each this.votes.voters }}
+        <li>{{ name }}</li>
+        {{/each }}
+      </ul>
       <h2>{{ this.name }}</h2>
       <p>Suggested by: {{ this.user.name }}</p>
       <p>Votes: {{ this.votes.votes }}</p>

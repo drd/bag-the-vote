@@ -75,6 +75,28 @@ li.talk {
     background-color: #f7f6e7;
 }
 
+li.talk ul.voters {
+    float: right;
+    width: 10em;
+}
+
+li.talk ul.voters li {
+    display: none;
+}
+
+li.talk ul.voters:hover li {
+    display: block;
+}
+
+li.talk ul.voters:before {
+    content: "Voters ↓";
+    display: inline-block;
+}
+
+li.talk ul.voters:hover:before {
+    display: none;
+}
+
 img.thumb {
     max-width: 80px;
     max-height: 80px;
